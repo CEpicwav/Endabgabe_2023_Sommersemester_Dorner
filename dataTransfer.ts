@@ -13,7 +13,7 @@ namespace endabgabe {
         };
     }
 
-    let url: string = "https://webuser.hs-furtwangen.de/~dornerle/Database/index.php/";
+    let url: string = "https://webuser.hs-furtwangen.de/~dornerle/myMingi/index.php/";
 
     //Funktion um die Daten aus dem Server auszulesen -> gibt Raketen zurück
     export async function handleLoad(): Promise<IceCream[]> {

@@ -1,7 +1,7 @@
 "use strict";
 var endabgabe;
 (function (endabgabe) {
-    let url = "https://webuser.hs-furtwangen.de/~dornerle/Database/index.php/";
+    let url = "https://webuser.hs-furtwangen.de/~dornerle/myMingi/index.php/";
     //Funktion um die Daten aus dem Server auszulesen -> gibt Raketen zurück
     async function handleLoad() {
         let response = await fetch(url + "?command=find&collection=dataList&data={}");
