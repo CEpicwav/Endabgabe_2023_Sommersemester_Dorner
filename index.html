@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="vector.js" defer></script>
+    <script src="dataTransfer.js" defer></script>
+    <script src="drawings.js" defer></script>
+    <script src="iceCream.js" defer></script>
+    <script src="customer.js" defer></script>
+    <script src="iceCreamShop.js" defer></script>
+    <script src="gameLogic.js" defer></script>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="text">Eisdiele deines Vertrauens</h1>
+
+    <div>
+        <label for="saved-iceCream-selection">Gespeicherte Eissorten:</label>
+        <select id="saved-iceCream-selection"></select>
+    </div>
+
+    <div>
+        <label for="iceCream-name">Eissorte:</label>
+        <input type="text" id="iceCream-name">
+    </div>
+
+    <div>
+        <label for="iceCream-color">Farbe:</label>
+        <input type="color" id="iceCream-color">
+    </div>
+
+    <div>
+        <label for="iceCream-number">Anzahl:</label>
+        <input type="number" id="iceCream-number">
+    </div>
+
+    <div>
+        <label for="iceCream-sprinkles">Sträusel:</label>
+        <input type="checkbox" id="iceCream-sprinkles">    
+    </div>
+
+    <div>
+        <label for="iceCream-price">Preis:</label>
+        <input type="number" id="iceCream-price">
+    </div>
+
+    <button id="save-iceCream-button">Eissorte speichern!</button>
+
+    <div id="game-container">
+        <canvas id="game-canvas" width="1000" height="500"></canvas>
+        <button id="start-game-button">Start Game</button>
+    </div>
+
+
+</body>
+</html>
