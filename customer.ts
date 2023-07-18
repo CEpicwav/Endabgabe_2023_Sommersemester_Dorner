@@ -31,30 +31,30 @@ namespace endabgabe {
                     iceCreamShop.removeUnsatisfiedCustomer(this);
                 }
             }
-            if(this.eatingTime > 0 && this.served) {
+            if (this.eatingTime > 0 && this.served) {
                 // verringere die eating time abhängig von der frequenz in der update (refresh) aufgerufen wird
                 this.eatingTime -= refreshRate;
-                if(this.eatingTime <= 0) {
+                if (this.eatingTime <= 0) {
                     this.standUp();
                 }
                 return;
             }
-            if(this.target != null) {
+            if (this.target != null) {
                 this.move(this.target.position);
             }
         }
 
         // zeichnet den Kunden
         draw(_ordering: boolean = false): void {
-            if (this.waitingTime < this.waitingTimeLimit/3) {
+            if (this.waitingTime < this.waitingTimeLimit / 3) {
                 drawHappySmiley(this.position);
-            } else if(this.waitingTime < this.waitingTimeLimit/3*2) {
+            } else if (this.waitingTime < this.waitingTimeLimit / 3 * 2) {
                 drawNeutralSmiley(this.position);
             } else {
                 drawSadSmiley(this.position);
             }
 
-            if(_ordering) {
+            if (_ordering) {
                 drawSpeechBallon(this.position, this.desiredIceCream);
             }
         }
@@ -67,16 +67,16 @@ namespace endabgabe {
             this.position.add(direction);
             // falls das ziel auf 5 genau erreicht wurde, setze das ziel auf null
             if (Math.abs(this.position.x - _target.x) < 5 && Math.abs(this.position.y - _target.y) < 5) {
-                if(this.target instanceof Door) {
+                if (this.target instanceof Door) {
                     // falls der kunde served ist, wird er aus dem shop entfernt
-                    if(this.served) {
+                    if (this.served) {
                         iceCreamShop.removeFinishedCustomer(this);
                         return;
                     } else {
                         this.waiting = true;
                     }
                 }
-                if(this.target instanceof Seat) {
+                if (this.target instanceof Seat) {
                     this.target.customer = this;
                 }
                 this.target = null;
@@ -84,7 +84,7 @@ namespace endabgabe {
         }
 
         isMoving(): boolean {
-            if(this.target != null) {
+            if (this.target != null) {
                 return true;
             }
             return false;
@@ -96,7 +96,7 @@ namespace endabgabe {
         }
 
         standUp(): void {
-            if(this.seat != null) {
+            if (this.seat != null) {
                 this.seat.clearSeat();
                 this.seat = null;
             }

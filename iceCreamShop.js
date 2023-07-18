@@ -84,7 +84,7 @@ var endabgabe;
                     this.finishedCustomers.push(eatingCustomer);
                     eatingCustomer.setTarget(this.exit);
                     // add income
-                    this.income += eatingCustomer.desiredIceCream[Object.keys(eatingCustomer.desiredIceCream)[0]].price;
+                    this.income += eatingCustomer.desiredIceCream.price;
                 }
             }
         }
@@ -128,7 +128,7 @@ var endabgabe;
         }
         removeUnsatisfiedCustomer(_customer) {
             this.waitingCustomers.splice(this.waitingCustomers.indexOf(_customer), 1);
-            this.lostIncome += _customer.desiredIceCream[Object.keys(_customer.desiredIceCream)[0]].price;
+            this.lostIncome += _customer.desiredIceCream.price;
             console.log("lost income: " + this.lostIncome);
         }
         checkForFreeSeats() {

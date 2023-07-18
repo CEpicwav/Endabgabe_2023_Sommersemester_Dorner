@@ -40,12 +40,12 @@ var endabgabe;
     }
     endabgabe.drawWall = drawWall;
     function drawIce(_position, _size = 30 / endabgabe.iceCreamMenu.length, _iceCream) {
-        for (let i = 1; i <= _iceCream[Object.keys(_iceCream)[0]].eiskugel.number; i++) {
-            drawIceBall(new endabgabe.Vector(_position.x, _position.y - (_size * 0.5) * (i - 1)), _size, _iceCream[Object.keys(_iceCream)[0]].eiskugel.color);
+        for (let i = 1; i <= _iceCream.iceCount; i++) {
+            drawIceBall(new endabgabe.Vector(_position.x, _position.y - (_size * 0.5) * (i - 1)), _size, _iceCream.color);
         }
         drawIceCone(_position, _size);
-        if (_iceCream[Object.keys(_iceCream)[0]].sprinkles) {
-            drawSprinkles(new endabgabe.Vector(_position.x, _position.y - (_size * 0.5) * (_iceCream[Object.keys(_iceCream)[0]].eiskugel.number - 1)), _size);
+        if (_iceCream.sprinkles) {
+            drawSprinkles(new endabgabe.Vector(_position.x, _position.y - (_size * 0.5) * (_iceCream.iceCount - 1)), _size);
         }
     }
     endabgabe.drawIce = drawIce;

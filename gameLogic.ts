@@ -32,7 +32,7 @@ namespace endabgabe {
     function drawGame(): void {
         crc2.fillStyle = "rgba(255, 255, 255, 1)";
         crc2.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-        
+
         // draw the ice cream shop
         iceCreamShop.draw();
     }

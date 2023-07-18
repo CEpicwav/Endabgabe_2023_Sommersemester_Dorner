@@ -20,7 +20,7 @@ namespace endabgabe {
             this.maxCustomers = _maxCustomers;
             // create seats on the left side of the canvas and add them to the seats array
             for (let i: number = 0; i < this.maxCustomers; i++) {
-                let seatPosition: Vector = new Vector(gameCanvas.width/2, gameCanvas.height / (this.maxCustomers + 1) + i * gameCanvas.height / (this.maxCustomers + 1));
+                let seatPosition: Vector = new Vector(gameCanvas.width / 2, gameCanvas.height / (this.maxCustomers + 1) + i * gameCanvas.height / (this.maxCustomers + 1));
                 let seat: Seat = new Seat(seatPosition);
                 this.seats.push(seat);
                 this.entrance = new Door(new Vector(gameCanvas.width - gameCanvas.width / 10, gameCanvas.height / 3));
@@ -30,10 +30,10 @@ namespace endabgabe {
             // create menu items
             for (let iceCream of _iceCreamMenu) {
                 let menuItem: MenuItem = new MenuItem(
-                        iceCream,
-                        new Vector(gameCanvas.width / 10, gameCanvas.height / (iceCreamMenu.length + 1) + iceCreamMenu.indexOf(iceCream) * gameCanvas.height / (iceCreamMenu.length + 1)),
-                        (gameCanvas.height / 8)/_iceCreamMenu.length
-                    );
+                    iceCream,
+                    new Vector(gameCanvas.width / 10, gameCanvas.height / (iceCreamMenu.length + 1) + iceCreamMenu.indexOf(iceCream) * gameCanvas.height / (iceCreamMenu.length + 1)),
+                    (gameCanvas.height / 8) / _iceCreamMenu.length
+                );
                 this.menu.push(menuItem);
             }
         }
@@ -85,7 +85,7 @@ namespace endabgabe {
             }
 
             const servingMenuItem: MenuItem | null = this.activeMenuItem;
-            if(servingMenuItem == null) {
+            if (servingMenuItem == null) {
                 return;
             }
             // check if a seat is clicked and if so, unseat the customer
@@ -97,7 +97,7 @@ namespace endabgabe {
                     eatingCustomer.setTarget(this.exit);
 
                     // add income
-                    this.income += eatingCustomer.desiredIceCream[Object.keys(eatingCustomer.desiredIceCream)[0]].price;
+                    this.income += eatingCustomer.desiredIceCream.price;
                 }
             }
         }
@@ -111,18 +111,18 @@ namespace endabgabe {
             for (let i: number = 0; i < this.menu.length; i++) {
 
                 if (this.activeMenuItem == this.menu[i]) {
-                    highlightIce(new Vector(gameCanvas.width / 10, gameCanvas.height / (this.menu.length + 1) + i * gameCanvas.height / (this.menu.length + 1)), (gameCanvas.height / 8)/this.menu.length);
+                    highlightIce(new Vector(gameCanvas.width / 10, gameCanvas.height / (this.menu.length + 1) + i * gameCanvas.height / (this.menu.length + 1)), (gameCanvas.height / 8) / this.menu.length);
                 }
 
                 drawIce(new Vector(gameCanvas.width / 10, gameCanvas.height / (this.menu.length + 1) + i * gameCanvas.height / (this.menu.length + 1)),
-                    (gameCanvas.height / 8)/this.menu.length,
+                    (gameCanvas.height / 8) / this.menu.length,
                     this.menu[i].iceCream
                 );
             }
 
             // draw walls
             drawWall(new Vector(gameCanvas.width - gameCanvas.width / 10, 0), gameCanvas.width / 50, gameCanvas.height / 3 - this.entrance.size / 2);
-            drawWall(new Vector(gameCanvas.width - gameCanvas.width / 10, gameCanvas.height / 3 + this.entrance.size/2), gameCanvas.width / 50, gameCanvas.height / 3 - this.entrance.size);
+            drawWall(new Vector(gameCanvas.width - gameCanvas.width / 10, gameCanvas.height / 3 + this.entrance.size / 2), gameCanvas.width / 50, gameCanvas.height / 3 - this.entrance.size);
             drawWall(new Vector(gameCanvas.width - gameCanvas.width / 10, (gameCanvas.height - gameCanvas.height / 3) + this.entrance.size / 2), gameCanvas.width / 50, gameCanvas.height / 2 - this.entrance.size / 2);
 
             // draw seats
@@ -155,7 +155,7 @@ namespace endabgabe {
 
         removeUnsatisfiedCustomer(_customer: Customer): void {
             this.waitingCustomers.splice(this.waitingCustomers.indexOf(_customer), 1);
-            this.lostIncome += _customer.desiredIceCream[Object.keys(_customer.desiredIceCream)[0]].price;
+            this.lostIncome += _customer.desiredIceCream.price;
             console.log("lost income: " + this.lostIncome);
         }
 
@@ -244,7 +244,7 @@ namespace endabgabe {
         }
 
         checkClicked(_position: Vector): boolean {
-            if (Vector.getDifference(_position, this.position).length < this.size*2) {
+            if (Vector.getDifference(_position, this.position).length < this.size * 2) {
                 return true;
             }
             return false;

@@ -5,7 +5,7 @@ namespace endabgabe {
         serverIceCreams.forEach(icecream => {
             addEisToList(icecream);
         });
-        showIceCreamToSelect();
+        showIceCreamsToSelect();
     });
 
     let savedIceCreamSelection = document.getElementById("saved-iceCream-selection") as HTMLSelectElement;
@@ -15,52 +15,56 @@ namespace endabgabe {
     let sprinklesInput: HTMLInputElement = <HTMLInputElement>document.getElementById("iceCream-sprinkles");
     let priceInput: HTMLInputElement = <HTMLInputElement>document.getElementById("iceCream-price");
 
-    gameCanvas.addEventListener("click", giveIceCream);
-
-    function giveIceCream(_event: MouseEvent): void {
-        // x und y position der maus auf dem canvas werden ausgelesen. Es wird der Offset vom Canvas zum Seitenrand abgezogen
-        let mousePosition: Vector = new Vector(_event.clientX - crc2.canvas.offsetLeft, _event.clientY - crc2.canvas.offsetTop);
-    }
-
     // Ein Standard Vanille-Eis wird initialisiert
     export let iceCreamMenu: IceCream[] = [];
-    let vanillaIceCream: IceCream = { "Vanille": { eiskugel: { color: "#ffff55", number: 3 }, sprinkles: true,  price: 3 } };
+    let vanillaIceCream: IceCream = { name: "Vanille", color: "#ffff55", iceCount: 3, sprinkles: true, price: 3 };
     addEisToList(vanillaIceCream);
-    let schokoIceCream: IceCream = { "Schoko": { eiskugel: { color: "#441122", number: 1 }, sprinkles: false, price: 1 } };
+    let schokoIceCream: IceCream = { name: "Schoko", color: "#441122", iceCount: 1, sprinkles: false, price: 1 };
     addEisToList(schokoIceCream);
-    let cookiesIceCream: IceCream = { "Cookies": { eiskugel: { color: "#996600", number: 2 }, sprinkles: true, price: 2 } };
+    let cookiesIceCream: IceCream = { name: "Cookies", color: "#996600", iceCount: 2, sprinkles: true, price: 2 };
     addEisToList(cookiesIceCream);
-    showIceCreamToSelect();
+    showIceCreamsToSelect();
 
     // fügt das Eis zu dem Eisarray hinzu
     function addEisToList(_iceCream: IceCream): void {
         iceCreamMenu.push(_iceCream);
     }
 
-    function showIceCreamToSelect(): void {
+    // Reagiere auf Änderungen des ausgewählten Elements
+    savedIceCreamSelection.addEventListener("change", () => {
+        let selectedIceCream: IceCream | undefined = iceCreamMenu.find(iceCream => iceCream.name === savedIceCreamSelection.value);
+        if (selectedIceCream) {
+            setInputValuesToSelectedIceCream(selectedIceCream);
+            drawCurrentIceCream();
+        } else {
+            throw new Error("Diese Auswahl existiert nicht.");
+        }
+    });
+
+    function showIceCreamsToSelect(): void {
 
         savedIceCreamSelection.innerHTML = "";
 
         for (let iceCream of iceCreamMenu) {
             let option: HTMLOptionElement = document.createElement("option");
-            // Object.keys(iceCream)[0] stellt hier den Name der Rakete dar
-            option.value = Object.keys(iceCream)[0];
-            option.text = Object.keys(iceCream)[0];
+            option.value = iceCream.name;
+            option.text = iceCream.name;
             savedIceCreamSelection.add(option);
         }
 
         // setze die Anzeige auf die letzte Eissorte (diese ist auch die am neusten hinzugefügte)
-        savedIceCreamSelection.value = Object.keys(iceCreamMenu[iceCreamMenu.length - 1])[0];
-        setInputValuesToSelectedRocket(iceCreamMenu[iceCreamMenu.length - 1]);
+        savedIceCreamSelection.value = iceCreamMenu[iceCreamMenu.length - 1].name;
+        setInputValuesToSelectedIceCream(iceCreamMenu[iceCreamMenu.length - 1]);
+        drawCurrentIceCream();
     }
 
-    function setInputValuesToSelectedRocket(_iceCream: IceCream): void {
-        let iceCreamName: string = Object.keys(_iceCream)[0];
+    function setInputValuesToSelectedIceCream(_iceCream: IceCream): void {
+        let iceCreamName: string = _iceCream.name;
         nameInput.value = iceCreamName;
-        colorInput.value = _iceCream[iceCreamName].eiskugel.color;
-        numberInput.value = _iceCream[iceCreamName].eiskugel.number.toString();
-        sprinklesInput.checked = _iceCream[iceCreamName].sprinkles;
-        priceInput.value = _iceCream[iceCreamName].price.toString();
+        colorInput.value = _iceCream.color;
+        numberInput.value = _iceCream.iceCount.toString();
+        sprinklesInput.checked = _iceCream.sprinkles;
+        priceInput.value = _iceCream.price.toString();
     }
 
     // get button to save the ice
@@ -74,10 +78,21 @@ namespace endabgabe {
         let iceCreamSprinkles: boolean = sprinklesInput.checked;
         let iceCreamPrice: number = parseInt(priceInput.value);
 
-        let iceCream: IceCream = { [iceCreamName]: { eiskugel: { color: iceCreamColor, number: iceCreamNumber }, sprinkles: iceCreamSprinkles, price: iceCreamPrice } };
+        let iceCream: IceCream = { name: iceCreamName, color: iceCreamColor, iceCount: iceCreamNumber, sprinkles: iceCreamSprinkles, price: iceCreamPrice };
         addEisToList(iceCream);
-        showIceCreamToSelect();
+        showIceCreamsToSelect();
         saveIceCreamToServer(iceCream);
+    }
+
+    function drawCurrentIceCream(): void {
+        let iceCreamName: string = nameInput.value;
+        let iceCreamColor: string = colorInput.value;
+        let iceCreamNumber: number = parseInt(numberInput.value);
+        let iceCreamSprinkles: boolean = sprinklesInput.checked;
+        let iceCreamPrice: number = parseInt(priceInput.value);
+
+        let iceCream: IceCream = { name: iceCreamName, color: iceCreamColor, iceCount: iceCreamNumber, sprinkles: iceCreamSprinkles, price: iceCreamPrice };
+        drawIce(new Vector(300, 300), 100, iceCream);
     }
 
     // add event listener to the start button
