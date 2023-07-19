@@ -3,7 +3,7 @@ namespace endabgabe {
     window.addEventListener("load", async () => {
         let serverIceCreams: IceCream[] = await handleLoad();
         serverIceCreams.forEach(icecream => {
-            addEisToList(icecream);
+            addIceToList(icecream);
         });
         showIceCreamsToSelect();
     });
@@ -15,18 +15,18 @@ namespace endabgabe {
     let sprinklesInput: HTMLInputElement = <HTMLInputElement>document.getElementById("iceCream-sprinkles");
     let priceInput: HTMLInputElement = <HTMLInputElement>document.getElementById("iceCream-price");
 
-    // Ein Standard Vanille-Eis wird initialisiert
+    // Ein Standard Vanille-Ice wird initialisiert
     export let iceCreamMenu: IceCream[] = [];
     let vanillaIceCream: IceCream = { name: "Vanille", color: "#ffff55", iceCount: 3, sprinkles: true, price: 3 };
-    addEisToList(vanillaIceCream);
+    addIceToList(vanillaIceCream);
     let schokoIceCream: IceCream = { name: "Schoko", color: "#441122", iceCount: 1, sprinkles: false, price: 1 };
-    addEisToList(schokoIceCream);
+    addIceToList(schokoIceCream);
     let cookiesIceCream: IceCream = { name: "Cookies", color: "#996600", iceCount: 2, sprinkles: true, price: 2 };
-    addEisToList(cookiesIceCream);
+    addIceToList(cookiesIceCream);
     showIceCreamsToSelect();
 
-    // fügt das Eis zu dem Eisarray hinzu
-    function addEisToList(_iceCream: IceCream): void {
+    // fügt das Ice zu dem Icearray hinzu
+    function addIceToList(_iceCream: IceCream): void {
         iceCreamMenu.push(_iceCream);
     }
 
@@ -52,7 +52,7 @@ namespace endabgabe {
             savedIceCreamSelection.add(option);
         }
 
-        // setze die Anzeige auf die letzte Eissorte (diese ist auch die am neusten hinzugefügte)
+        // setze die Anzeige auf die letzte Icesorte (diese ist auch die am neusten hinzugefügte)
         savedIceCreamSelection.value = iceCreamMenu[iceCreamMenu.length - 1].name;
         setInputValuesToSelectedIceCream(iceCreamMenu[iceCreamMenu.length - 1]);
         drawCurrentIceCream();
@@ -79,7 +79,7 @@ namespace endabgabe {
         let iceCreamPrice: number = parseInt(priceInput.value);
 
         let iceCream: IceCream = { name: iceCreamName, color: iceCreamColor, iceCount: iceCreamNumber, sprinkles: iceCreamSprinkles, price: iceCreamPrice };
-        addEisToList(iceCream);
+        addIceToList(iceCream);
         showIceCreamsToSelect();
         saveIceCreamToServer(iceCream);
     }
@@ -91,8 +91,12 @@ namespace endabgabe {
         let iceCreamSprinkles: boolean = sprinklesInput.checked;
         let iceCreamPrice: number = parseInt(priceInput.value);
 
+
+        crc2.fillStyle = "rgba(255, 255, 255, 1)";
+        crc2.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
         let iceCream: IceCream = { name: iceCreamName, color: iceCreamColor, iceCount: iceCreamNumber, sprinkles: iceCreamSprinkles, price: iceCreamPrice };
-        drawIce(new Vector(300, 300), 100, iceCream);
+        drawIce(new Vector(300, 300), 50, iceCream);
     }
 
     // add event listener to the start button
